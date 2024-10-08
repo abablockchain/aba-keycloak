@@ -79,7 +79,7 @@
     <#if realm.password && realm.registrationAllowed && !registrationDisabled??>
       <div class="text-center">
         ${msg("noAccount")}
-        <@linkPrimary.kw href=url.registrationUrl>
+        <@linkPrimary.kw href="http://localhost:3000/nova-conta">
           ${msg("doRegister")}
         </@linkPrimary.kw>
       </div>
