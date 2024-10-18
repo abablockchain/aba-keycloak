@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.1
+    restart: always
+    container_name: aba-keycloak
+    environment:
+      - KEYCLOAK_ADMIN=${KEYCLOAK_ADMIN}
+      - KEYCLOAK_ADMIN_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
+      - KEYCLOAK_IMPORT=/opt/keycloak/data/import/realm.json
+      - KC_PROXY=edge
+      - KC_HOSTNAME=auth.example.com
+      - PROXY_ADDRESS_FORWARDING=true
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
+      - KC_DB=postgres
+      - KC_DB_URL=jdbc:postgresql://postgres:5432/AbaKeycloak
+      - KC_DB_USERNAME=${POSTGRES_USER}
+      - KC_DB_PASSWORD=${POSTGRES_PASSWORD}
+      - KC_DB_SCHEMA=public
+      - KC_DB_SCHEMA_AUTO=update
+    ports:
+      - 8081:8080
+    volumes:
+      - ./data:/opt/keycloak/data/
+      - ./themes:/opt/keycloak/themes/
+      - ./providers:/opt/keycloak/providers
+      - ./providers:/opt/keycloak/providers
+    #command: start --https-certificate-file=/etc/x509/https/tls.crt --https-certificate-key-file=/etc/x509/https/tls.key --hostname-strict=false
+    command: start
+        
+networks:
+  postgres_default:
+    external: true
