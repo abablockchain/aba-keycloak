@@ -13,12 +13,14 @@
   <#if section="header">
     ${msg("emailForgotTitle")}
   <#elseif section="form">
-    <div class="reset-info-box">
-      <p class="reset-info-text">${msg("emailInstruction")}</p>
+    <div class="reset-password-info">
+      <p class="info-title">Recuperação de Senha</p>
+      <p class="info-text">Digite seu CPF ou CNPJ cadastrado para receber um e-mail com instruções de redefinição de senha.</p>
+      <p class="info-detail">Você receberá um e-mail no endereço cadastrado com um link para criar uma nova senha.</p>
     </div>
     
     <form action="${url.loginAction}" method="post" class="flex flex-col items-center justify-center space-y-4 w-full">
-      <div>
+      <div class="w-full">
         <@inputPrimary.kw
           autocomplete=realm.loginWithEmailAllowed?string("email", "username")
           autofocus=true
@@ -31,14 +33,20 @@
           <@labelUsername.kw />
         </@inputPrimary.kw>
       </div>
-      <div>
+      <div class="w-full">
         <@buttonPrimary.kw type="submit">
           ${msg("doSubmit")}
         </@buttonPrimary.kw>
       </div>
     </form>
-  <#elseif section="info">
     
+    <div class="text-center" style="margin-top: 1.5rem;">
+      <a href="${url.loginUrl}" class="form-link" style="font-size: 0.875rem;">
+        ← Voltar para o login
+      </a>
+    </div>
+  <#elseif section="info">
+    ${msg("emailInstruction")}
   <#elseif section="nav">
     <@linkSecondary.kw href=url.loginUrl>
       <span class="text-sm">${kcSanitize(msg("backToLogin"))?no_esc}</span>
@@ -88,22 +96,6 @@
 </script>
 
 <style>
-  .reset-info-box {
-    background-color: #f8fafc;
-    border-left: 4px solid #3b82f6;
-    border-radius: 0.5rem;
-    padding: 1rem 1.25rem;
-    margin-bottom: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-  
-  .reset-info-text {
-    margin: 0;
-    color: #475569;
-    font-size: 0.875rem;
-    line-height: 1.6;
-  }
-  
   .loader {
     border: 2px solid #f3f3f3;
     border-top: 2px solid #555;
